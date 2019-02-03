@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image to Palette</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="drop_parent">
+            <div id="chunk1">
+                <h1>Image to Palette</h1>
+                <label for="file">Click below or drop file to upload.</label>
+                <div id="drop_input">
+                    <input type="file" id="imgupload" name="img" onchange="imgData(this.files)">
+                </div>
+            </div>
+            <div id="chunk2">
+                <div id="numselect">
+                    <label for="number">Number of colors: </label>
+                    <input type="number" id="number" name="number" value="5" min="1" max="200">
+                </div>
+                <div id="viewtype">
+                    <span>View type: </span>
+                    <input type="radio" id="regular" name="viewtype" value="regular" checked onchange="changeView(this.value)">
+                    <label for="regular">Regular</label>
+                    <input type="radio" id="compact" name="viewtype" value="compact" onchange="changeView(this.value)">
+                    <label for="compact">Compact</label>
+                </div>
+                <div id="hexlist">
+                    <p>Color list:</p>
+                    <textarea id="hexcolors" cols="6" readonly></textarea>
+                    <button type="button" id="copycolors">Copy colors</button>
+                </div>
+            </div>
+        </div>
+        <div id="palette"></div>
+    </div>
+
+    <div id="card_template" class="card">
+        <div class="front face">
+            <div class="swatch"></div>
+            <p class="colorhex"></p>
+        </div>
+        <div class="back face">
+            <div class="colorlist">
+                <p class="hex"></p>
+                <p class="rgb"></p>
+                <p class="hsl"></p>
+                <p class="hsv"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
