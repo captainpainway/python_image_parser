@@ -11,6 +11,8 @@ const preventDefaults = (e) => {
     e.stopPropagation();
 }
 
+let currentFile = null;
+
 window.onload = () => imgupload.value = null;
 
 if (viewtype[0].checked) {
@@ -36,8 +38,7 @@ if (viewtype[0].checked) {
 })
 
 drop_input.addEventListener('drop', e => {
-    imgupload.files = e.dataTransfer.files;
-    imgData(imgupload.files);
+    imgData(e.dataTransfer.files);
 }, false);
 
 drop_input.addEventListener('click', e => {
@@ -45,11 +46,17 @@ drop_input.addEventListener('click', e => {
 }, false);
 
 number.onchange = () => {
-    imgData(imgupload.files);
+    imgData(currentFile);
 };
 
 function changeView(view) {
     palette.className = view;
+    if (view == 'regular') {
+        let cards = document.getElementsByClassName('card');
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].classList.remove('flip-vertical-right');
+        }
+    }
 }
 
 copycolors.addEventListener('click', e => {
@@ -58,7 +65,18 @@ copycolors.addEventListener('click', e => {
 });
 
 function imgData(file) {
+    if (file !== currentFile) {
+        currentFile = file;
+    }
     const newFile = file[0];
+    if (!newFile) return;
+    if (number.value > 128 || number.value < 1) return;
+    if (newFile.type !== 'image/jpeg' 
+    && newFile.type !== 'image/png'
+    && newFile.type !== 'image/gif') {
+        palette.innerHTML = 'Unsupported file type.';
+        return;
+    }
     new Promise((resolve, reject) => {
         let reader = new FileReader();
         reader.onloadend = function() {
@@ -114,11 +132,10 @@ function imgData(file) {
                         return;
                     }
                     if (card.classList.contains('flip-vertical-right')) {
-                        card.classList.remove('flip-vertical-right');
-                    } else {
-                        card.classList.add('flip-vertical-right');
+                        return;
                     }
-                });
+                    card.classList.add('flip-vertical-right');
+                }, false);
                 cards.push(card);
 
                 const spacer = document.createElement('div');
@@ -126,7 +143,7 @@ function imgData(file) {
                 spacer.className = 'spacer';
                 palette.appendChild(spacer);
             });
-            
+
             let i = 0;
             let interval = setInterval(() => {
                 if (i == number.valueAsNumber - 1) {

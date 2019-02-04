@@ -9,7 +9,7 @@ body {
 }
 #app {
     background-color: white;
-    width: 70vw;
+    width: 90vw;
     max-width: 1280px;
     min-height: 90vh;
     margin: 1em auto;
@@ -20,7 +20,7 @@ body {
     grid-gap: 10px;
 }
 h1 {
-    color: #336d79;
+    color: #348fac;
 }
 
 #card_template {
@@ -36,6 +36,7 @@ h1 {
     transform-style: preserve-3d;
     backface-visibility: hidden;
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    will-change: transform;
 }
 .regular .spacer {
     display: block;
@@ -103,24 +104,31 @@ h1 {
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     border-radius: 1em;
 }
-.regular .front:hover, .regular .back:hover {
+.regular .front:hover {
     box-shadow: 0 7px 14px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     border-radius: 1em;
 }
+.compact .back {
+    display: none;
+}
 
+#chunk1, #chunk2 {
+    width: 400px;
+    margin: 0 auto;
+}
 #palette {
     grid-column: 2 / 2;
     display: grid;
 }
 #palette.regular {
-    grid-template-columns: auto auto auto;
+    grid-template-columns: repeat(3, auto);
     grid-auto-rows: 280px;
     justify-content: center;
     grid-gap: 20px;
 }
 #palette.compact {
-    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-columns: repeat(6, auto);
     grid-auto-rows: 100px;
     justify-content: center;
     grid-gap: 20px;
@@ -131,15 +139,16 @@ h1 {
 #drop_input {
     border: dashed 2px #ccc;
     border-radius: 1em;
-    width: 400px;
-    height: 300px;
+    width: 100%;
+    height: 0;
+    padding-bottom: 66%;
     text-align: center;
     line-height: 280px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
     background-image: url('image.png');
-    margin: 0.5em 0;
+    margin: 0.5em auto;
 }
 #imgupload {
     display: none;
@@ -161,9 +170,8 @@ h1 {
     border-bottom: solid 1px #ccc;
 }
 #hexcolors {
-    width: 400px;
-    height: 200px;
-    padding: 0.5em;
+    width: 100%;
+    height: 100px;
     box-sizing: border-box;
 }
 button {
@@ -178,52 +186,118 @@ button {
 button:hover {
     background-color: #f39e43;
 }
+#copycolors {
+    display: block;
+    margin: 0.5em auto;
+}
 
 
-@media (max-width: 1600px) {
+@media (max-width: 1299px) {
     #palette.regular {
         display: grid;
-        grid-template-columns: auto auto;
+        grid-template-columns: repeat(2, auto);
         grid-auto-rows: 280px;
         justify-content: center;
     }
     #palette.compact {
         display: grid;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: repeat(4, auto);
         grid-auto-rows: 100px;
         justify-content: center;
     }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1023px) {
     #app {
-        width: 90vw;
-    }
-}
-
-@media (max-width: 1024px) {
-    #app {
-        grid-template-columns: auto;
+        grid-template-columns: 1fr;
         grid-gap: 10px;
     }
     #drop_parent {
-        width: 400px;
         grid-column: 1 / 1;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
+    #chunk1 {
+        grid-column: 1 / 2;
+        justify-content: center;
+    }
+    #chunk2 {
+        grid-column: 2 / 2;
+        justify-content: center;
     }
     #palette {
         grid-column: 1 / 1;
     }
     #palette.regular {
-        grid-template-columns: auto auto auto;
+        grid-template-columns: repeat(3, auto);
         grid-auto-rows: 280px;
     }
     #palette.compact {
-        grid-template-columns: auto auto auto auto auto auto;
+        grid-template-columns: repeat(6, auto);
         grid-auto-rows: 100px;
     }
 }
 
+@media (max-width: 959px) {
+    #drop_parent {
+        grid-column: 1 / 1;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 10px;
+    }
+    #chunk1 {
+        grid-column: 1 / 1;
+        justify-content: center;
+    }
+    #chunk2 {
+        grid-column: 1 / 1;
+        justify-content: center;
+        margin-bottom: 2em;
+    }
+}
 
+@media (max-width: 819px) {
+    #palette.regular {
+        grid-template-columns: repeat(2, auto);
+        grid-auto-rows: 280px;
+    }
+    #palette.compact {
+        grid-template-columns: repeat(5, auto);
+        grid-auto-rows: 100px;
+    }
+}
+@media (max-width: 699px) {
+    #palette.compact {
+        grid-template-columns: repeat(4, auto);
+        grid-auto-rows: 100px;
+    }
+}
+
+@media (max-width: 559px) {
+    #palette.compact {
+        grid-template-columns: repeat(3, auto);
+        grid-auto-rows: 100px;
+    }
+}
+
+@media (max-width: 549px) {
+    #palette.regular {
+        grid-template-columns: repeat(1, auto);
+        grid-auto-rows: 280px;
+    }
+}
+
+@media (max-width: 499px) {
+    #chunk1, #chunk2 {
+        width: 100%;
+    }
+    #app {
+        width: 100vw;
+        min-height: 100vh;
+        margin: 0;
+    }
+}
 
 .animate-in {
 	-webkit-animation: flip-in-ver-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;

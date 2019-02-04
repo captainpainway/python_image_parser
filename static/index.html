@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Image to Palette</title>
+    <title>Image Color Palette</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
         <div id="drop_parent">
             <div id="chunk1">
-                <h1>Image to Palette</h1>
-                <label for="file">Click below or drop file to upload.</label>
+                <h1>Image Color Palette</h1>
+                <p>Get a palette of colors from your pictures!</p>
+                <label for="file">Click below or drop file. (JPG, PNG, GIF)</label>
                 <div id="drop_input">
                     <input type="file" id="imgupload" name="img" onchange="imgData(this.files)">
                 </div>
@@ -19,7 +20,7 @@
             <div id="chunk2">
                 <div id="numselect">
                     <label for="number">Number of colors: </label>
-                    <input type="number" id="number" name="number" value="5" min="1" max="200">
+                    <input type="number" id="number" name="number" value="9" min="1" max="128">
                 </div>
                 <div id="viewtype">
                     <span>View type: </span>
