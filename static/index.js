@@ -73,7 +73,8 @@ function imgData(file) {
     if (number.value > 128 || number.value < 1) return;
     if (newFile.type !== 'image/jpeg' 
     && newFile.type !== 'image/png'
-    && newFile.type !== 'image/gif') {
+    && newFile.type !== 'image/gif'
+    && newFile.type !== 'image/webp') {
         palette.innerHTML = 'Unsupported file type.';
         return;
     }
@@ -85,7 +86,7 @@ function imgData(file) {
         };
         reader.readAsDataURL(newFile);
     }).then(response => {
-        palette.innerHTML = 'Fetching swatches...';
+        palette.innerHTML = '<div><div id="spinner-parent"><img src="spinner.png" id="spinner" /></div><p>Fetching swatches...</p></div>';
         fetch('/imagedata', {
             method: 'POST',
             headers: {
@@ -152,8 +153,8 @@ function imgData(file) {
                 document.getElementById('spacer_' + i).appendChild(cards[i]);
                 i++
             }, 100)
-        }).catch(err => {
-            console.log(err);
+        }).catch(() => {
+            palette.innerHTML = 'File error. Try another image.';
         });
     });
 }

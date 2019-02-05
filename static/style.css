@@ -12,7 +12,7 @@ body {
     width: 90vw;
     max-width: 1280px;
     min-height: 90vh;
-    margin: 1em auto;
+    margin: 1em auto 0 auto;
     padding: 1em;
     box-sizing: border-box;
     display: grid;
@@ -21,6 +21,20 @@ body {
 }
 h1 {
     color: #348fac;
+}
+#spinner-parent {
+    position: relative;
+    height: 50px;
+    padding-top: 50px;
+}
+#spinner {
+    width: 100px;
+    height: 100px;
+    animation: 2s linear infinite spinner;
+    will-change: transform;
+    transform: translate3d(-50%, -50%, 0);
+    transform-origin: center;
+    position: absolute;
 }
 
 #card_template {
@@ -189,6 +203,17 @@ button:hover {
 #copycolors {
     display: block;
     margin: 0.5em auto;
+}
+
+#info {
+    width: 90vw;
+    max-width: 1280px;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    background: #ffffff;
+    margin: 0 auto;
+    padding: 1em;
+    box-sizing: border-box;
 }
 
 
@@ -383,3 +408,11 @@ input::-webkit-inner-spin-button {
     }
   }
   
+@keyframes spinner {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+    100% {
+         transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+}

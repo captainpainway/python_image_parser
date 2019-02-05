@@ -19,6 +19,10 @@ def css():
 def img():
     return app.send_static_file('image.png')
 
+@app.route('/spinner.png')
+def spinner():
+    return app.send_static_file('spinner.png')
+
 @app.route('/imagedata', methods=['POST'])
 def getjson():
     data = request.get_json()
