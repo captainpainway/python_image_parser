@@ -6,12 +6,14 @@ const number = document.getElementById('number');
 const colorlist = document.getElementById('hexcolors');
 const copycolors = document.getElementById('copycolors');
 const viewtype = document.getElementsByName('viewtype');
+const reset = document.getElementById('reset');
 const preventDefaults = (e) => {
     e.preventDefault();
     e.stopPropagation();
 }
 
 let currentFile = null;
+let clicked = false;
 
 window.onload = () => imgupload.value = null;
 
@@ -53,15 +55,32 @@ function changeView(view) {
     palette.className = view;
     if (view == 'regular') {
         let cards = document.getElementsByClassName('card');
-        for (let i = 0; i < cards.length; i++) {
-            cards[i].classList.remove('flip-vertical-right');
+        // for (let i = 0; i < cards.length; i++) {
+        //     cards[i].classList.remove('flip-vertical-right');
+        // }
+        if (clicked) {
+            reset.classList.add('show');
+            reset.classList.remove('hide');
         }
+    } else {
+        reset.classList.remove('show');
+        reset.classList.add('hide');
     }
 }
 
 copycolors.addEventListener('click', e => {
     hexcolors.select();
     document.execCommand('copy');
+});
+
+reset.addEventListener('click', e => {
+    let cards = document.getElementsByClassName('card');
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].classList.remove('flip-vertical-right');
+    }
+    reset.classList.remove('show');
+    reset.classList.add('hide');
+    clicked = false;
 });
 
 function imgData(file) {
@@ -100,10 +119,11 @@ function imgData(file) {
             return response.json();
         }).then(data => {
             palette.innerHTML = '';
-            colorlist.innerText = `[${data.join(', ')}]`;
+            colorlist.innerText = `[${data.hex.join(', ')}]`;
             let cards = [];
 
-            data.map((d, idx) => {
+            console.log(data)
+            data.hex.map((d, idx) => {
                 const card_temp = document.getElementById('card_template');
                 const card = card_temp.cloneNode(true);
                 card.removeAttribute('id');
@@ -118,14 +138,10 @@ function imgData(file) {
                 const colorlist = card.getElementsByClassName('colorlist')[0];
                 colorlist.style.borderColor = d;
 
-                let rgb = hexToRgb(d.replace('#',''));
-                let hsl = rgbToHsl(...rgb);
-                let hsv = rgbToHsv(...rgb);
-
                 colorlist.getElementsByClassName('hex')[0].innerText = `Hex: ${d}`;
-                colorlist.getElementsByClassName('rgb')[0].innerText = `RGB: ${rgb.join(', ')}`;
-                colorlist.getElementsByClassName('hsl')[0].innerText = `HSL: ${hsl.join(', ')}`;
-                colorlist.getElementsByClassName('hsv')[0].innerText = `HSV: ${hsv.join(', ')}`;
+                colorlist.getElementsByClassName('rgb')[0].innerText = `RGB: ${data.rgb[idx].join(', ')}`;
+                colorlist.getElementsByClassName('hsl')[0].innerText = `HSL: ${hls(data.hls[idx]).join(', ')}`;
+                colorlist.getElementsByClassName('hsv')[0].innerText = `HSV: ${hsv(data.hsv[idx]).join(', ')}`;
 
                 card.classList.add('animate-in');
                 card.addEventListener('click', () => {
@@ -136,6 +152,11 @@ function imgData(file) {
                         return;
                     }
                     card.classList.add('flip-vertical-right');
+                    if (!clicked) {
+                        reset.classList.add('show');
+                        reset.classList.remove('hide');
+                        clicked = true;
+                    }
                 }, false);
                 cards.push(card);
 
@@ -159,47 +180,12 @@ function imgData(file) {
     });
 }
 
-function hexToRgb(hex) {
-    var int = parseInt(hex, 16);
-    var r = (int >> 16) & 255;
-    var g = (int >> 8) & 255;
-    var b = int & 255;
-    return [r, g, b];
-}
-
-function rgbToHsl(r, g, b) {
-    r /= 255, g /= 255, b /= 255;
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, l = (max + min) / 2;
-    if (max == min) { h = s = 0; }
-    else {
-        var d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        switch (max) {
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-        }
-        h /= 6;
-    }
+function hls(hls) {
+    const [h, l, s] = [...hls];
     return [(h * 100 + 0.5) | 0, ((s * 100 + 0.5) | 0) + '%', ((l * 100 + 0.5) | 0) + '%'];
 }
 
-function rgbToHsv(r, g, b) {
-    r /= 255, g /= 255, b /= 255;
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, v = max;
-    var d = max - min;
-    s = max == 0 ? 0 : d / max;
-    if (max == min) {
-        h = 0;
-    } else {
-        switch (max) {
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-        }
-        h /= 6;
-    }
+function hsv(hsv) {
+    const [h, s, v] = [...hsv];
     return [(h * 100 + 0.5) | 0, ((s * 100 + 0.5) | 0) + '%', ((v * 100 + 0.5) | 0) + '%'];
 }

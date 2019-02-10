@@ -12,7 +12,7 @@
             <div id="chunk1">
                 <h1>Image Color Palette</h1>
                 <p>Get a palette of colors from your pictures!</p>
-                <label for="file">Click below or drop file. (JPG, PNG, GIF, WEBP)</label>
+                <label for="file">Click below or drop file. (JPG, PNG, GIF)</label>
                 <div id="drop_input">
                     <input type="file" id="imgupload" name="img" onchange="imgData(this.files)">
                 </div>
@@ -28,6 +28,7 @@
                     <label for="regular">Regular</label>
                     <input type="radio" id="compact" name="viewtype" value="compact" onchange="changeView(this.value)">
                     <label for="compact">Compact</label>
+                    <button type="button" id="reset" class="hide">Reset swatches</button>
                 </div>
                 <div id="hexlist">
                     <p>Color list:</p>
@@ -36,12 +37,15 @@
                 </div>
             </div>
         </div>
-        <div id="palette"></div>
-    </div>
-    <div id="info">
-        <div id="about"><a href="#">About this site.</a></div>
-        <div id="email"><a href="contact">Contact.</a></div>
-        <div id="cookies">This site uses cookies.</div>
+        <div id="palette">
+            <noscript>Please enable JavaScript to use this service. Thank you.</noscript>
+        </div>
+        <div id="info">
+            <p>Click the box above or drag and drop any PNG, JPG, or GIF image to get a palette of colors based on the image. It even works on animated GIFs!</p>
+            <p>Choose the number of colors that you'd like to get from your image, from 1 to 128, and choose a view type, regular or compact. You can change the number of colors or view type after processing your photo.</p>
+            <p>Your images are not stored anywhere on the server.</p>
+            <p>© 2019, Image Color Palette</p>
+        </div>
     </div>
 
     <div id="card_template" class="card">
