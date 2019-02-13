@@ -3,8 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Generate stunning color palettes based on your JPG, PNG, and animated GIF images!">
     <title>Image Color Palette</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134205939-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-134205939-1');
+    </script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+             google_ad_client: "ca-pub-6196738730207681",
+             enable_page_level_ads: true
+        });
+    </script>
 </head>
 <body>
     <div id="app">
@@ -35,6 +52,14 @@
                     <textarea id="hexcolors" cols="6" readonly></textarea>
                     <button type="button" id="copycolors">Copy colors</button>
                 </div>
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:inline-block;width:320px;height:50px"
+		     data-ad-client="ca-pub-6196738730207681"
+		     data-ad-slot="2446124152"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
             </div>
         </div>
         <div id="palette">
@@ -43,8 +68,10 @@
         <div id="info">
             <p>Click the box above or drag and drop any PNG, JPG, or GIF image to get a palette of colors based on the image. It even works on animated GIFs!</p>
             <p>Choose the number of colors that you'd like to get from your image, from 1 to 128, and choose a view type, regular or compact. You can change the number of colors or view type after processing your photo.</p>
-            <p>Your images are not stored anywhere on the server.</p>
-            <p>© 2019, Image Color Palette</p>
+            <p>In regular view, click the swatches to flip the cards over and get information on the hex, RGB, HSL, and HSV color values. Click the "Reset swatches" button to flip the cards back over.</p>
+            <p>The image processor will also create an array of hex values in the "Color list" box. Simply click the "Copy colors" button to copy the array to your clipboard.</p>
+            <p>Your images are not stored anywhere on the server. This app generates color palettes on-the-fly using Python, and image data is never saved.</p>
+            <p>© 2019, Image Color Palette</p><a href="privacypolicy.html">Privacy Policy</a>
         </div>
     </div>
 
@@ -63,6 +90,6 @@
         </div>
     </div>
 
-    <script src="index.js"></script>
+    <script src="index.min.js"></script>
 </body>
 </html>

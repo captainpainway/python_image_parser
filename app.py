@@ -7,7 +7,7 @@ app = Flask(__name__, static_url_path='/static')
 def root():
     return app.send_static_file('index.html')
 
-@app.route('/index.js')
+@app.route('/index.min.js')
 def js():
     return app.send_static_file('index.js')
 
@@ -22,6 +22,10 @@ def img():
 @app.route('/spinner.png')
 def spinner():
     return app.send_static_file('spinner.png')
+
+@app.route('/privacypolicy.html')
+def privacypolicy():
+    return app.send_static_file('privacypolicy.html')
 
 @app.route('/imagedata', methods=['POST'])
 def getjson():
