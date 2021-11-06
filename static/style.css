@@ -58,7 +58,6 @@ h1 {
     height: 260px;
     border-radius: 1em;
     transform-style: preserve-3d;
-    backface-visibility: hidden;
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     will-change: transform;
 }
